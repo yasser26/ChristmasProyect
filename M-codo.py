@@ -1,4 +1,13 @@
-def elbow_plot(data, maxK=10, seed_centroids=None):
+# -*- coding: utf-8 -*-
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn import datasets
+from sklearn.cluster import KMeans
+
+def elbow_plot(data, maxK=10,minn=1, seed_centroids=None):
     """
         parameters:
         - data: pandas DataFrame (data to be fitted)
@@ -34,4 +43,5 @@ def elbow_plot(data, maxK=10, seed_centroids=None):
 iris = datasets.load_iris()
 iris_data = pd.DataFrame(iris.data, columns=iris['feature_names'])
 
-elbow_plot(iris_data[['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)','']], maxK=10,minn=1)
+a=elbow_plot(iris_data[['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)']], maxK=10,minn=1)
+print (a)
