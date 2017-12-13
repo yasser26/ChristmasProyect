@@ -69,6 +69,10 @@ def elbow_plot(data, maxK=10, seed_centroids=None):
     plt.show()
     return
 
+
+iris = datasets.load_iris()
+iris_data = pd.DataFrame(iris.data, columns=iris['feature_names'])
+
 elbow_plot(iris_data[['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)']], maxK=10)
 
 
