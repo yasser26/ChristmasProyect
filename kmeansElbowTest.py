@@ -8,7 +8,7 @@ from sklearn import datasets
 from sklearn.cluster import KMeans
 
 def main():
-    """
+
     iris = datasets.load_iris()
     # iris
 
@@ -44,7 +44,7 @@ def main():
 
     print(pd.Series([(iris_target.loc[i][0], kmeans_iris.labels_[i]) for i in range(len(iris.target))]).value_counts())
     print(pd.Series([(iris_target_name.loc[i][0], kmeans_iris.labels_[i]) for i in range(len(iris.target))]).value_counts())
-"""
+
 def elbow_plot(data, maxK=10, seed_centroids=None):
     """
         parameters:
@@ -54,11 +54,8 @@ def elbow_plot(data, maxK=10, seed_centroids=None):
     """
     sse = {}
     for k in range(1, maxK):
-
-        """
+        
         print("k: ", k)
-        """
-
         if seed_centroids is not None:
             seeds = seed_centroids.head(k)
             kmeans = KMeans(n_clusters=k, max_iter=500, n_init=100, random_state=0, init=np.reshape(seeds, (k,1))).fit(data)
@@ -68,15 +65,11 @@ def elbow_plot(data, maxK=10, seed_centroids=None):
             data["clusters"] = kmeans.labels_
         # Inertia: Sum of distances of samples to their closest cluster center
         sse[k] = kmeans.inertia_
-    print list(sse.keys())
-    print list(sse.values())
-
-"""
     plt.figure()
     plt.plot(list(sse.keys()), list(sse.values()))
     plt.show()
     return
-"""
+
 
 iris = datasets.load_iris()
 iris_data = pd.DataFrame(iris.data, columns=iris['feature_names'])
