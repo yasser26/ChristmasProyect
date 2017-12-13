@@ -25,7 +25,7 @@ def main():
 
     #print iris_target_name
 
-    kmeans_3 = KMeans(n_clusters=3)
+    kmeans_3 = KMeans(n_clusters=100)
     kmeans_iris = kmeans_3.fit(iris_data[['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)']])
 
     fig = plt.figure(1, figsize=(12,9))
@@ -42,6 +42,7 @@ def main():
 
     plt.show()
 
+print(pd.Series([(iris_target.loc[i][0], kmeans_iris.labels_[i]) for i in range(len(iris.target))]).value_counts())
 
 
 
