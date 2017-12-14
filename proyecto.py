@@ -74,16 +74,28 @@ def main():
         kmeans = KMeans(n_clusters = i, max_iter = itera_kmeans).fit(iris_data1)
 
         filas_ma_resultados.append(metodo_Codo(kmeans))
-        filas_ma_resultados.append(metodo_Silueta(kmeans, iris_data1))
-        filas_ma_resultados.append(indice_Calinski_Harabaz(kmeans, iris_data1))
+        if(i!=1):
+            filas_ma_resultados.append(metodo_Silueta(kmeans, iris_data1))
+        else:
+            filas_ma_resultados.append('n/a')
+
+        if(i!=1):
+            filas_ma_resultados.append(indice_Calinski_Harabaz(kmeans, iris_data1))
+        else:
+            filas_ma_resultados.append('n/a')
 
         matriz_resultados.append(filas_ma_resultados)
 
 
     #print iris_data1
     #print iris_label1
-    print matriz_resultados
+    #print matriz_resultados
 
+    titles = ['k','Elbow Method','Silhouette','Calinski-Harabaz']
+    impri_ma = pd.DataFrame(matriz_resultados, columns=titles)
+    #print impri_ma
+    impri_ma.to_csv('prueba.csv', sep='\t', index=False)
+    #np.savetxt('matriz_resultados.txt', impri_ma)
 
 if __name__ == '__main__':
     main()
