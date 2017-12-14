@@ -52,6 +52,25 @@ def indice_Calinski_Harabaz(kmeans, iris_data):
     index = metrics.calinski_harabaz_score(iris_data, kmeans.labels_)
     return index
 
+def metodo_Gap(kmeans, iris_data, i):
+
+    refDisps = np.zeros(3);
+    for u in range(3):
+
+        # Create new random reference set
+        randomReference0 = np.random.random_sample(size=iris_data.shape);
+        randomReference = pd.DataFrame(randomReference0);
+        # Fit to it
+        km = KMeans(n_clusters = i).fit(randomReference);
+
+        refDisp = km.inertia_;
+        refDisps[u] = refDisp;
+
+    gap = np.log(np.mean(refDisps)) - np.log(kmeans.inertia_);
+    return gap;
+
+
+
 
 
 def main():
@@ -84,18 +103,15 @@ def main():
         else:
             filas_ma_resultados.append('n/a')
 
+
+        filas_ma_resultados.append(metodo_Gap(kmeans, iris_data1, i))
+
         matriz_resultados.append(filas_ma_resultados)
 
-
-    #print iris_data1
-    #print iris_label1
-    #print matriz_resultados
-
-    titles = ['k','Elbow Method','Silhouette','Calinski-Harabaz']
+    titles = ['k','Elbow Method','Silhouette','Calinski-Harabaz', 'Gap Method']
     impri_ma = pd.DataFrame(matriz_resultados, columns=titles)
-    #print impri_ma
     impri_ma.to_csv('prueba.csv', sep='\t', index=False)
-    #np.savetxt('matriz_resultados.txt', impri_ma)
+
 
 if __name__ == '__main__':
     main()
