@@ -8,6 +8,9 @@ from mpl_toolkits.mplot3d import Axes3D
 from sklearn import datasets
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_samples, silhouette_score
+from sklearn.metrics import pairwise_distances
+from sklearn import metrics
+
 
 # Función que lee el set de datos. Recibe como parámetro el path del dataset
 def leerDataSet(pathDataSet):
@@ -44,6 +47,10 @@ def metodo_Silueta(kmeans, iris_data):
     avg = silhouette_score(iris_data, kmeans.labels_);
     return avg;
 
+# Función que retorna del indice Calinski-Harabaz
+def indice_Calinski_Harabaz(kmeans, iris_data):
+    index = metrics.calinski_harabaz_score(iris_data, kmeans.labels_)
+    return index
 
 
 
@@ -65,9 +72,10 @@ def main():
         filas_ma_resultados.append(i)
 
         kmeans = KMeans(n_clusters = i, max_iter = itera_kmeans).fit(iris_data1)
-        filas_ma_resultados.append(metodo_Codo(kmeans))
 
+        filas_ma_resultados.append(metodo_Codo(kmeans))
         filas_ma_resultados.append(metodo_Silueta(kmeans, iris_data1))
+        filas_ma_resultados.append(indice_Calinski_Harabaz(kmeans, iris_data1))
 
         matriz_resultados.append(filas_ma_resultados)
 
