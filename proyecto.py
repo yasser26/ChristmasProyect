@@ -74,7 +74,7 @@ def metodo_Gap(kmeans, iris_data, i):
 
 
 def main():
-    pathDataSet = raw_input("Ingrese la dirección del set de datos: ")
+    #pathDataSet = raw_input("Ingrese la dirección del set de datos: ")
     mink = int(raw_input("Ingrese el valor del k mínimo: "))
     maxk = int( raw_input("Ingrese el valor del k máximo: "))
     itera_kmeans = int(raw_input("Ingrese la cantidad de veces que iterará el algoritmo kmeas: "))
@@ -83,7 +83,8 @@ def main():
     iris_data1 = obtenerData(data0)
     iris_label1 = obtenerLabels(data0)
 
-    matriz_resultados = []
+
+    matriz_resultados0 = []
 
     for i in range(mink, maxk+1):
 
@@ -96,20 +97,27 @@ def main():
         if(i!=1):
             filas_ma_resultados.append(metodo_Silueta(kmeans, iris_data1))
         else:
-            filas_ma_resultados.append('n/a')
+            filas_ma_resultados.append(0)
 
         if(i!=1):
             filas_ma_resultados.append(indice_Calinski_Harabaz(kmeans, iris_data1))
         else:
-            filas_ma_resultados.append('n/a')
+            filas_ma_resultados.append(0)
 
 
         filas_ma_resultados.append(metodo_Gap(kmeans, iris_data1, i))
 
-        matriz_resultados.append(filas_ma_resultados)
+        matriz_resultados0.append(filas_ma_resultados)
 
+    matriz_resultados = np.asarray(matriz_resultados0)
     titles = ['k','Elbow Method','Silhouette','Calinski-Harabaz', 'Gap Method']
-    impri_ma = pd.DataFrame(matriz_resultados, columns=titles)
+    for q in range(1,5):
+
+        plt.plot(list(matriz_resultados[:,0]), list(matriz_resultados[:, q]), marker='x', linestyle=':', color='b', label = titles[q])
+        plt.show()
+
+
+    impri_ma = pd.DataFrame(matriz_resultados0, columns=titles)
     impri_ma.to_csv('prueba.csv', sep='\t', index=False)
 
 
